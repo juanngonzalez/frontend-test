@@ -29,6 +29,7 @@ export default function Navbar() {
   const { addSearchedPokemon, removeSearchedPokemon, catchedPokemon } = useCatchedPokemon();
   const [currentPage, setCurrentPage] = useState(0);
   const [selectedPokemon, setSelectedPokemon] = useState(null);
+  const [details, withDetails] = useState(false);
   const [selectedDetailPokemon, setSelectedDetailPokemon] = useState(null);
   const deviceSize = useBreakpointValue({ base: 'small', sm: 'small', md: 'medium', lg: 'large', xl: 'extra-large' });
   const pokemonsPerPage = deviceSize !== "small" ? 5 : 1;
@@ -56,11 +57,16 @@ export default function Navbar() {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
   };
 
+  const handleCloseViewDetailPokemon = ()=> {
+    withDetails(true)
+    pokemonDataModal.onClose()
+  }
+
   const searchPokemon = async () => {
     if (input) {
       try {
         const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${input.toLowerCase()}`);
-        addSearchedPokemon(res.data);
+        handleViewDetailPokemon(res.data)
       } catch (error) {
         toast.error("Error fetching pokemon")
       }
@@ -158,7 +164,7 @@ export default function Navbar() {
           </ModalBody>
         </ModalContent>
       </Modal>
-      <Modal {...pokemonDataModal}  size="sm" >
+      <Modal {...pokemonDataModal} onClose={handleCloseViewDetailPokemon}  size="sm" >
         <ModalOverlay />
         <ModalContent overflowY="visible" ml={5} mr={5} borderRadius={20} backgroundImage={`linear-gradient(to top, #f4f75c,white)`}>
           <ModalHeader textTransform="capitalize" backgroundColor="red" color="white" borderRadius="20px 20px 0px 0px">
@@ -166,7 +172,7 @@ export default function Navbar() {
           </ModalHeader>
           <ModalCloseButton color="white" />
           <ModalBody>
-            {selectedDetailPokemon && <PokemonData pokemon={selectedDetailPokemon} noStats={true} />}
+            {selectedDetailPokemon && <PokemonData pokemon={selectedDetailPokemon} noStats={!details} />}
           </ModalBody>
         </ModalContent>
       </Modal>
