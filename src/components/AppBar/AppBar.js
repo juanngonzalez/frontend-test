@@ -57,7 +57,7 @@ export default function Navbar() {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
   };
 
-  const handleCloseViewDetailPokemon = ()=> {
+  const handleCloseViewDetailPokemon = () => {
     withDetails(true)
     pokemonDataModal.onClose()
   }
@@ -116,7 +116,7 @@ export default function Navbar() {
           </InputRightElement>
         </InputGroup>
         <Flex position="relative">
-          <Image src="/pokeball.svg" alt="Logo" style={{ height: '30px', margin: '25px 20px 0px 0px', cursor: 'pointer' }} onClick={handleViewPokemon}  />
+          <Image src="/pokeball.svg" alt="Logo" style={{ height: '30px', margin: '25px 20px 0px 0px', cursor: 'pointer' }} onClick={handleViewPokemon} />
           {caughtPokemonCount > 0 && (
             <Box
               position="absolute"
@@ -146,7 +146,7 @@ export default function Navbar() {
           <ModalCloseButton color="white" />
           <ModalBody >
             <Flex alignItems="center" flexDirection={`${deviceSize === "small" ? "column" : "row"}`} justifyContent="space-evenly" height="70vh" overflowX="auto"  >
-              <PokemonCardContainer 
+              <PokemonCardContainer
                 pokemon={catchedPokemon.slice(currentPage * pokemonsPerPage, (currentPage + 1) * pokemonsPerPage)}
                 handleNextPage={handleNextPage}
                 handlePrevPage={handlePrevPage}
@@ -164,7 +164,7 @@ export default function Navbar() {
           </ModalBody>
         </ModalContent>
       </Modal>
-      <Modal {...pokemonDataModal} onClose={handleCloseViewDetailPokemon}  size="sm" >
+      <Modal {...pokemonDataModal} onClose={handleCloseViewDetailPokemon} size="sm" >
         <ModalOverlay />
         <ModalContent overflowY="visible" ml={5} mr={5} borderRadius={20} backgroundImage={`linear-gradient(to top, #f4f75c,white)`}>
           <ModalHeader textTransform="capitalize" backgroundColor="red" color="white" borderRadius="20px 20px 0px 0px">
