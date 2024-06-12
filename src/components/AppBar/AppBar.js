@@ -58,12 +58,13 @@ export default function Navbar() {
   };
 
   const handleCloseViewDetailPokemon = () => {
-    withDetails(true)
+    withDetails(false)
     pokemonDataModal.onClose()
   }
 
   const searchPokemon = async () => {
     if (input) {
+      withDetails(true)
       try {
         const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${input.toLowerCase()}`);
         handleViewDetailPokemon(res.data)
