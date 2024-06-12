@@ -30,15 +30,24 @@ export default function PokemonCard({ pokemon }) {
       spacing="5"
       boxShadow="xl"
       p="5"
-      w={`${deviceSize === "small" ? 130 : 160}`}
+      minW={`${deviceSize === "small" ? 150 : 160}`}
+      maxW={`${deviceSize === "small" ? 150 : 160}`}
+      minH={`${deviceSize === "small" ? 250 : 260}`}
+      maxH={`${deviceSize === "small" ? 250 : 260}`}
       borderRadius="xl"
       backgroundImage="linear-gradient(to bottom, #ec2c3f00, white)"
       alignItems="center"
     >
-      {imageLoading && <CircularProgress isIndeterminate color="red.300" p={12} />}
+      {imageLoading && (
+        <CircularProgress
+          mt={80}
+          isIndeterminate
+          color="red.300"
+          size="30px" // Tamaño del indicador de carga
+        />
+      )}
       <Image
         alt="pokemon"
-        w="150px"
         style={{
           filter: "drop-shadow(5px 0px 10px rgba(0, 0, 0, 0.3))",
           display: imageLoading ? "none" : "block",
@@ -67,4 +76,5 @@ export default function PokemonCard({ pokemon }) {
     </Stack>
   );
 }
+
 
