@@ -30,11 +30,17 @@ export default function Home({ initialPokemonData }) {
   const [isLoading, setIsLoading] = useState(true)
   const [initialPokemonValue, setInitialPokemonValue] = useState(initialPokemonData)
   const { searchedPokemon } = useCatchedPokemon();
+  const deviceSize = useBreakpointValue({ base: 'small', sm: 'small', md: 'medium', lg: 'large', xl: 'extra-large' });
 
   async function fetchPokemonDetails(url) {
     const response = await axios.get(url);
     return response.data;
   }
+  
+  const handleViewPokemon = useCallback((pokemon) => {
+    setSelectedPokemon(pokemon);
+    pokemonDataModal.onOpen();
+  }, [setSelectedPokemon, pokemonDataModal]);
 
   useEffect(() => {
     if (searchedPokemon) {
@@ -88,12 +94,7 @@ export default function Home({ initialPokemonData }) {
     }
   }
 
-  const handleViewPokemon = useCallback((pokemon) => {
-    setSelectedPokemon(pokemon);
-    pokemonDataModal.onOpen();
-  }, [setSelectedPokemon, pokemonDataModal]);
 
-  const deviceSize = useBreakpointValue({ base: 'small', sm: 'small', md: 'medium', lg: 'large', xl: 'extra-large' });
   return (
     <>
       <Flex alignItems="center" minH="100vh" minW="100vw" justifyContent="center" >
