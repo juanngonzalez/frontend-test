@@ -2,9 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import {
   Container,
   Stack,
-  SimpleGrid,
   Flex,
-  Box,
   Modal,
   ModalOverlay,
   ModalHeader,
@@ -18,7 +16,6 @@ import {
 } from "@chakra-ui/react";
 import { useCatchedPokemon } from "@/context/CatchedPokemonContext";
 import { toast } from "react-toastify";
-import PokemonCard from "@/components/Pokemon/Cards/PokemonCard";
 import PokemonData from "@/components/Pokemon/DetailCards/PokemonData";
 import axios from "axios";
 import PokemonCardContainer from "@/components/Pokemon/Cards/PokemonCardContainer";
