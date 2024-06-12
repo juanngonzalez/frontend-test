@@ -1,4 +1,4 @@
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, Image } from "@chakra-ui/react";
 import "../styles/globals.css"
 import { CatchedPokemonProvider } from '../context/CatchedPokemonContext';
 import AppLayout from "@/components/AppLayout/AppLayout";
@@ -17,7 +17,7 @@ export default function App({ Component, pageProps }) {
             toastStyle={{
               backgroundImage: "linear-gradient(to left,white,#fcff52)",
             }}
-           icon={<img src="/pokeball.svg" />} 
+           icon={<Image src="/pokeball.svg" alt="toast icon"/>} 
             hideProgressBar={false}
             newestOnTop
             closeOnClick

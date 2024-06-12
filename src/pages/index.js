@@ -1,6 +1,4 @@
-import { Inter } from "next/font/google";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   Container,
   Stack,
@@ -22,6 +20,7 @@ import { useCatchedPokemon } from "@/context/CatchedPokemonContext";
 import { toast } from "react-toastify";
 import PokemonCard from "@/components/Pokemon/Cards/PokemonCard";
 import PokemonData from "@/components/Pokemon/DetailCards/PokemonData";
+import axios from "axios";
 
 export default function Home({ initialPokemonData }) {
   const pokemonDataModal = useDisclosure();
@@ -41,7 +40,7 @@ export default function Home({ initialPokemonData }) {
     if (searchedPokemon) {
       handleViewPokemon(searchedPokemon)
     }
-  }, [searchedPokemon])
+  }, [searchedPokemon, handleViewPokemon])
 
   useEffect(() => {
     async function fetchData() {
@@ -57,7 +56,8 @@ export default function Home({ initialPokemonData }) {
       }
     }
     fetchData();
-  }, [currentPage]);
+  }, [currentPage, initialPokemonValue]);
+
 
   async function handleNextPage() {
     if (currentPage < 50) {
@@ -88,10 +88,11 @@ export default function Home({ initialPokemonData }) {
     }
   }
 
-  function handleViewPokemon(pokemon) {
+  const handleViewPokemon = useCallback((pokemon) => {
     setSelectedPokemon(pokemon);
     pokemonDataModal.onOpen();
-  }
+  }, [setSelectedPokemon, pokemonDataModal]);
+
   const deviceSize = useBreakpointValue({ base: 'small', sm: 'small', md: 'medium', lg: 'large', xl: 'extra-large' });
   return (
     <>

@@ -14,7 +14,7 @@ export default function PokemonCatchedCheckbox({ pokemon }) {
 
     useEffect(() => {
         setCatched(catchedPokemon.find(catched => catched.id == pokemon.id) ? true : false)
-    }, [catchedPokemon])
+    }, [catchedPokemon, pokemon.id])
 
     const handleAddPokemon = (pokemonData) => {
         addPokemon(pokemonData);

@@ -5,7 +5,6 @@ import {
   Image,
   HStack,
   Badge,
-  AspectRatio,
   useBreakpointValue,
 } from "@chakra-ui/react";
 
