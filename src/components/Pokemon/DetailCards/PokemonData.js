@@ -12,7 +12,7 @@ import PokemonStats from "./PokemonStats";
 import PokemonInfo from "./PokemonInfo";
 import PokemonCatchedCheckbox from "./PokemonCatchedChecbox";
 
-export default function PokemonData({ pokemon }) {
+export default function PokemonData({ pokemon, noStats }) {
   return (
     <Stack spacing="5" pb="5" ml={2} mr={2} >
       <Stack spacing="5" position="relative">
@@ -41,7 +41,7 @@ export default function PokemonData({ pokemon }) {
         </AspectRatio>
         <PokemonInfo pokemon={pokemon} />
       </Stack>
-      <PokemonStats pokemon={pokemon} />
+      {!noStats && <PokemonStats pokemon={pokemon} />}
     </Stack>
   );
 }

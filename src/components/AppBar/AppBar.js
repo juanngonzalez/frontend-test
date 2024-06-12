@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import {
   Box,
   Modal,
@@ -7,7 +7,6 @@ import {
   ModalBody,
   ModalContent,
   ModalCloseButton,
-  SimpleGrid,
   Input,
   InputGroup,
   InputRightElement,
@@ -23,16 +22,31 @@ import { useCatchedPokemon } from '@/context/CatchedPokemonContext';
 import { toast } from 'react-toastify';
 import PokemonCardContainer from '../Pokemon/Cards/PokemonCardContainer';
 import MobileButtons from '../commons/MobileButtons';
+import PokemonData from '../Pokemon/DetailCards/PokemonData';
 
 export default function Navbar() {
   const [input, setInput] = useState("");
   const { addSearchedPokemon, removeSearchedPokemon, catchedPokemon } = useCatchedPokemon();
   const [currentPage, setCurrentPage] = useState(0);
+  const [selectedPokemon, setSelectedPokemon] = useState(null);
+  const [selectedDetailPokemon, setSelectedDetailPokemon] = useState(null);
   const deviceSize = useBreakpointValue({ base: 'small', sm: 'small', md: 'medium', lg: 'large', xl: 'extra-large' });
   const pokemonsPerPage = deviceSize !== "small" ? 5 : 1;
   const totalPages = Math.ceil(catchedPokemon.length / pokemonsPerPage);
   const caughtPokemonCount = catchedPokemon.length;
+  const pokemonCatchedModal = useDisclosure();
   const pokemonDataModal = useDisclosure();
+
+
+  const handleViewPokemon = useCallback((pokemon) => {
+    setSelectedPokemon(pokemon);
+    pokemonCatchedModal.onOpen();
+  }, [setSelectedPokemon, pokemonCatchedModal]);
+
+  const handleViewDetailPokemon = useCallback((pokemon) => {
+    setSelectedDetailPokemon(pokemon);
+    pokemonDataModal.onOpen();
+  }, [setSelectedDetailPokemon, pokemonDataModal]);
 
   const handleNextPage = () => {
     setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages - 1));
@@ -75,7 +89,10 @@ export default function Navbar() {
           justifyContent: "space-between"
         }}
       >
-        <Image src="/pokemon.svg" alt="Logo" style={{ height: '75px', paddingLeft: '10px' }} />
+        <Image src="/pokemon.svg" alt="Logo" style={{
+          height: '80px',
+          paddingLeft: '10px',
+        }} />
         <InputGroup width="50%" marginTop="20px">
           <Input
             sx={{
@@ -93,7 +110,7 @@ export default function Navbar() {
           </InputRightElement>
         </InputGroup>
         <Flex position="relative">
-          <Image src="/pokeball.svg" alt="Logo" style={{ height: '30px', margin: '25px 20px 0px 0px', cursor: 'pointer' }} onClick={() => pokemonDataModal.onOpen()} />
+          <Image src="/pokeball.svg" alt="Logo" style={{ height: '30px', margin: '25px 20px 0px 0px', cursor: 'pointer' }} onClick={handleViewPokemon}  />
           {caughtPokemonCount > 0 && (
             <Box
               position="absolute"
@@ -114,7 +131,7 @@ export default function Navbar() {
           )}
         </Flex>
       </Box>
-      <Modal {...pokemonDataModal} size="full">
+      <Modal {...pokemonCatchedModal} size="full">
         <ModalOverlay />
         <ModalContent borderRadius={20} ml={50} mr={50} mt={10} minHeight={"90vh"} backgroundImage={`linear-gradient(to top, #f4f75c,white)`}  >
           <ModalHeader textTransform="capitalize" backgroundColor="red" color="white" borderRadius="20px 20px 0px 0px">
@@ -123,13 +140,14 @@ export default function Navbar() {
           <ModalCloseButton color="white" />
           <ModalBody >
             <Flex alignItems="center" flexDirection={`${deviceSize === "small" ? "column" : "row"}`} justifyContent="space-evenly" height="70vh" overflowX="auto"  >
-                <PokemonCardContainer pokemon={catchedPokemon
-                  .slice(currentPage * pokemonsPerPage, (currentPage + 1) * pokemonsPerPage)}
-                  handleNextPage={handleNextPage}
-                  handlePrevPage={handlePrevPage}
-                  baseCol={1}
-                  sm={1}
-                />
+              <PokemonCardContainer 
+                pokemon={catchedPokemon.slice(currentPage * pokemonsPerPage, (currentPage + 1) * pokemonsPerPage)}
+                handleNextPage={handleNextPage}
+                handlePrevPage={handlePrevPage}
+                baseCol={1}
+                sm={1}
+                handleViewPokemon={handleViewDetailPokemon}
+              />
               {deviceSize === "small" && <MobileButtons handleNextPage={handleNextPage} handlePrevPage={handlePrevPage} />}
             </Flex>
             <Box textAlign="center">
@@ -140,6 +158,19 @@ export default function Navbar() {
           </ModalBody>
         </ModalContent>
       </Modal>
+      <Modal {...pokemonDataModal}  size="sm" >
+        <ModalOverlay />
+        <ModalContent overflowY="visible" ml={5} mr={5} borderRadius={20} backgroundImage={`linear-gradient(to top, #f4f75c,white)`}>
+          <ModalHeader textTransform="capitalize" backgroundColor="red" color="white" borderRadius="20px 20px 0px 0px">
+            {selectedDetailPokemon?.name}
+          </ModalHeader>
+          <ModalCloseButton color="white" />
+          <ModalBody>
+            {selectedDetailPokemon && <PokemonData pokemon={selectedDetailPokemon} noStats={true} />}
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </>
   );
 }
+
