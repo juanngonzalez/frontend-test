@@ -1,4 +1,3 @@
-// context/CatchedPokemonContext.js
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -23,15 +22,14 @@ export const CatchedPokemonProvider = ({ children }) => {
       }
     };
     fetchData();
-  }, []); 
+  }, []);
 
   const addSearchedPokemon = (pokemon) => {
-      setSearchedPokemon(pokemon);
-    
+    setSearchedPokemon(pokemon);
   };
 
   const removeSearchedPokemon = () => {
-      setSearchedPokemon(null);
+    setSearchedPokemon(null);
   };
 
   const addPokemon = async (pokemon) => {
@@ -39,7 +37,7 @@ export const CatchedPokemonProvider = ({ children }) => {
       await axios.post('/api', pokemon);
       setCatchedPokemon((prev) => [...prev, pokemon]);
       toast.success("Pokemon catched")
-      
+
     } catch (error) {
       toast.error(error.message);
     }

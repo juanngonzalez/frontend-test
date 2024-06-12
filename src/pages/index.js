@@ -18,10 +18,10 @@ import {
   useBreakpointValue,
   Image,
 } from "@chakra-ui/react";
-import PokemonCard from "@/components/PokemonCard";
-import PokemonData from "@/components/PokemonData";
 import { useCatchedPokemon } from "@/context/CatchedPokemonContext";
 import { toast } from "react-toastify";
+import PokemonCard from "@/components/Pokemon/Cards/PokemonCard";
+import PokemonData from "@/components/Pokemon/DetailCards/PokemonData";
 
 export default function Home({ initialPokemonData }) {
   const pokemonDataModal = useDisclosure();

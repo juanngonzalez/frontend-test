@@ -1,14 +1,8 @@
-html,
-body {
-
-}
-
 #__next {
   scrollbar-width: none;
   background-image: linear-gradient(to right,#f4f75c,#fbff0b50);
 
 }
-
 
 ::-webkit-scrollbar{
   display: none;

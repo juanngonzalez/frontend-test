@@ -23,6 +23,7 @@ export default function PokemonCard({ pokemon }) {
       alignItems="center"
     >
         <Image
+        alt="pokemon"
         w="150px"
         style={{ filter: "drop-shadow(5px 0px 10px rgba(0, 0, 0, 0.3))" }}
           src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${pokemon.id}.png`}

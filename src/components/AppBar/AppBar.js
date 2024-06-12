@@ -17,7 +17,7 @@ import {
   useBreakpointValue,
   Image,
 } from "@chakra-ui/react";
-import PokemonCard from '../PokemonCard';
+import PokemonCard from '../Pokemon/Cards/PokemonCard';
 import axios from 'axios';
 import { useCatchedPokemon } from '@/context/CatchedPokemonContext';
 import { toast } from 'react-toastify';
@@ -73,7 +73,7 @@ export default function Navbar() {
           justifyContent: "space-between"
         }}
       >
-        <Image src="/pokemon.svg" alt="Logo" style={{ height: '75px', paddingLeft: '10px', cursor: "pointer" }} onClick={emptySearchPokemon} />
+        <Image src="/pokemon.svg" alt="Logo" style={{ height: '75px', paddingLeft: '10px' }}  />
         <InputGroup width="50%" marginTop="20px">
           <Input
             sx={{
