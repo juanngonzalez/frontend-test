@@ -21,7 +21,7 @@ export default function PokemonStats({ pokemon }) {
                     {pokemon.stats.map((e, i) => (
                         <Stack key={i}>
                             <Text marginTop={2} fontSize="xs" fontWeight="bold">{e.stat.name.replace("-", " ").toUpperCase()}</Text>
-                            <Progress bg="gray.300" borderRadius="full" value={e.base_stat} />
+                            <Progress colorScheme="red"  bg="yellow.200" borderRadius="full" value={e.base_stat} />
                         </Stack>
                     ))}
                 </Collapse>

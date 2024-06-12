@@ -21,6 +21,7 @@ import { toast } from "react-toastify";
 import PokemonCard from "@/components/Pokemon/Cards/PokemonCard";
 import PokemonData from "@/components/Pokemon/DetailCards/PokemonData";
 import axios from "axios";
+import PokemonCardContainer from "@/components/Pokemon/Cards/PokemonCardContainer";
 
 export default function Home({ initialPokemonData }) {
   const pokemonDataModal = useDisclosure();
@@ -36,7 +37,7 @@ export default function Home({ initialPokemonData }) {
     const response = await axios.get(url);
     return response.data;
   }
-  
+
   const handleViewPokemon = useCallback((pokemon) => {
     setSelectedPokemon(pokemon);
     pokemonDataModal.onOpen();
@@ -102,21 +103,7 @@ export default function Home({ initialPokemonData }) {
           <Stack >
             {!isLoading ?
               <>
-                <Flex alignItems="center" justifyContent="space-evenly" width="100%">
-                  {deviceSize != "small" && <Image src="/arrow-left.svg" alt="left arrow" style={{ height: 60, cursor: "pointer" }} onClick={handlePrevPage} />}
-                  <SimpleGrid spacing="5" columns={{ base: 2, md: 5, sm: 2 }} mt={5}>
-                    {pokemon.map((pokemon) => (
-                      <Box
-                        as="button"
-                        key={pokemon.id}
-                        onClick={() => handleViewPokemon(pokemon)}
-                      >
-                        <PokemonCard pokemon={pokemon} />
-                      </Box>
-                    ))}
-                  </SimpleGrid>
-                  {deviceSize != "small" && <Image src="/arrow-right.svg" alt="right arrow" style={{ height: 60, cursor: "pointer" }} onClick={handleNextPage} />}
-                </Flex>
+                <PokemonCardContainer pokemon={pokemon} handleNextPage={handleNextPage} handlePrevPage={handlePrevPage} handleViewPokemon={handleViewPokemon} baseCol={2} sm={2} />
                 {
                   deviceSize === "small" &&
                   <Flex flexDirection="row" justifyContent="space-evenly" w="100%" mt={5} mb={5}>

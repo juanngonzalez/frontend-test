@@ -1,4 +1,4 @@
-import {  useState } from 'react';
+import { useState } from 'react';
 import {
   Box,
   Modal,
@@ -21,6 +21,8 @@ import PokemonCard from '../Pokemon/Cards/PokemonCard';
 import axios from 'axios';
 import { useCatchedPokemon } from '@/context/CatchedPokemonContext';
 import { toast } from 'react-toastify';
+import PokemonCardContainer from '../Pokemon/Cards/PokemonCardContainer';
+import MobileButtons from '../commons/MobileButtons';
 
 export default function Navbar() {
   const [input, setInput] = useState("");
@@ -73,7 +75,7 @@ export default function Navbar() {
           justifyContent: "space-between"
         }}
       >
-        <Image src="/pokemon.svg" alt="Logo" style={{ height: '75px', paddingLeft: '10px' }}  />
+        <Image src="/pokemon.svg" alt="Logo" style={{ height: '75px', paddingLeft: '10px' }} />
         <InputGroup width="50%" marginTop="20px">
           <Input
             sx={{
@@ -121,24 +123,14 @@ export default function Navbar() {
           <ModalCloseButton color="white" />
           <ModalBody >
             <Flex alignItems="center" flexDirection={`${deviceSize === "small" ? "column" : "row"}`} justifyContent="space-evenly" height="70vh" overflowX="auto"  >
-              {deviceSize !== "small" && <Image src="/arrow-left.svg" alt="left arrow" style={{ height: 60, cursor: "pointer" }} onClick={handlePrevPage} />}
-              <SimpleGrid  spacing="5" columns={{ base: 1, md: 5, sm: 1 }}>
-                {catchedPokemon
-                  .slice(currentPage * pokemonsPerPage, (currentPage + 1) * pokemonsPerPage)
-                  .map((pokemon) => (
-                    <Box
-                      key={pokemon.id}
-                    >
-                      <PokemonCard pokemon={pokemon} />
-                    </Box>
-                  ))}
-              </SimpleGrid>
-              {deviceSize !== "small" && <Image src="/arrow-right.svg" alt="right arrow" style={{ height: 60, cursor: "pointer" }} onClick={handleNextPage} />}
-              {deviceSize === "small" &&
-                <Flex flexDirection="row" justifyContent="space-evenly" w="100%">
-                  <Image src="/arrow-left.svg" alt="left arrow" style={{ height: 60, cursor: "pointer" }} onClick={handlePrevPage} />
-                  <Image src="/arrow-right.svg" alt="right arrow" style={{ height: 60, cursor: "pointer" }} onClick={handleNextPage} />
-                </Flex>}
+                <PokemonCardContainer pokemon={catchedPokemon
+                  .slice(currentPage * pokemonsPerPage, (currentPage + 1) * pokemonsPerPage)}
+                  handleNextPage={handleNextPage}
+                  handlePrevPage={handlePrevPage}
+                  baseCol={1}
+                  sm={1}
+                />
+              {deviceSize === "small" && <MobileButtons handleNextPage={handleNextPage} handlePrevPage={handlePrevPage} />}
             </Flex>
             <Box textAlign="center">
               <Text fontSize={15} fontWeight={500}>
